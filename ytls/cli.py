@@ -50,7 +50,6 @@ def main():
     )
     compare_parser.set_defaults(func=compare_command)
 
-    # ---- Example for future subcommands (commented out) ----
     # convert_parser = subparsers.add_parser("convert", help="Convert YAML to JSON or other formats.")
     # convert_parser.add_argument("input_file", help="Path to the YAML file.")
     # convert_parser.add_argument("-to", choices=["json", "xml"], help="Target format.", required=True)
