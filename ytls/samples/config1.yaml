@@ -1,0 +1,32 @@
+# Configuration File 1
+
+application:
+  name: SampleApp
+  version: 1.0.0
+  debug: true
+  features:
+    authentication:
+      enabled: true
+      methods:
+        - password
+        - oauth
+    analytics:
+      enabled: false
+  database:
+    host: localhost
+    port: 5432
+    username: admin
+    password: secret
+    options:
+      pool_size: 20
+      timeout: 30
+  servers:
+    - name: server1
+      ip: 192.168.1.10
+      roles:
+        - web
+        - api
+    - name: server2
+      ip: 192.168.1.11
+      roles:
+        - db

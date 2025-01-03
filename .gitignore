@@ -1,0 +1,6 @@
+
+/.venv
+ytls.code-workspace
+/ytls/__pycache__
+/ytls/commands/__pycache__
+/ytls/utils/__pycache__
