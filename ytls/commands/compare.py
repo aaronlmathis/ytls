@@ -35,8 +35,13 @@ def compare_command(args):
     Args:
         args: Parsed arguments from the CLI (argparse.Namespace).
     """
-    yaml1 = load_yaml(args.file1)
-    yaml2 = load_yaml(args.file2)
+    try:
+        # Load the YAML files into Python dictionaries
+        yaml1 = load_yaml(args.file1)
+        yaml2 = load_yaml(args.file2)
+    except Exception as e:
+        print(f"Error loading YAML: {e}")
+        sys.exit(1)
 
     differences = compare_yamls(yaml1, yaml2, args.ignore_order)
 

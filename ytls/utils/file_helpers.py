@@ -24,8 +24,8 @@ def load_yaml(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             data = yaml.safe_load(file)
-            print(f"\nLoaded '{file_path}':")
-            pprint(data)
+            #print(f"\nLoaded '{file_path}':")
+            #pprint(data)
             return data
     except FileNotFoundError:
         print(f"Error: File not found - {file_path}")

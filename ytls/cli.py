@@ -18,6 +18,7 @@ import sys
 
 # Import the subcommand function
 from ytls.commands.compare import compare_command
+from ytls.commands.convert import convert_command
 
 
 def main():
@@ -50,10 +51,11 @@ def main():
     )
     compare_parser.set_defaults(func=compare_command)
 
-    # convert_parser = subparsers.add_parser("convert", help="Convert YAML to JSON or other formats.")
-    # convert_parser.add_argument("input_file", help="Path to the YAML file.")
-    # convert_parser.add_argument("-to", choices=["json", "xml"], help="Target format.", required=True)
-    # convert_parser.set_defaults(func=convert_command)  # you'd define convert_command in commands/convert.py
+    convert_parser = subparsers.add_parser("convert", help="Convert YAML to JSON or other formats.")
+    convert_parser.add_argument("input_file", help="Path to the YAML file.")
+    convert_parser.add_argument("output_file", help="Path to the output file.")
+    convert_parser.add_argument("-to", choices=["json", "xml"], help="Target format.", required=True)
+    convert_parser.set_defaults(func=convert_command)  
 
     # Parse the user's CLI input
     args = parser.parse_args()
