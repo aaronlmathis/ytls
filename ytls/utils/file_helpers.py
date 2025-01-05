@@ -28,8 +28,7 @@ def load_yaml(file_path):
             #pprint(data)
             return data
     except FileNotFoundError:
-        print(f"Error: File not found - {file_path}")
-        sys.exit(1)
+        raise FileNotFoundError(f"Error: File not found - {file_path}")
     except yaml.YAMLError as exc:
-        print(f"Error parsing YAML file {file_path}: {exc}")
-        sys.exit(1)
+        raise yaml.YAMLError(f"Error parsing YAML file {file_path}: {exc}")
+
