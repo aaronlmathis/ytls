@@ -19,6 +19,7 @@ import sys
 # Import the subcommand function
 from ytls.commands.compare import compare_command
 from ytls.commands.convert import convert_command
+from ytls.commands.url import url_command
 
 
 def main():
@@ -50,12 +51,38 @@ def main():
         help="Ignore the order of list items in YAML."
     )
     compare_parser.set_defaults(func=compare_command)
-
-    convert_parser = subparsers.add_parser("convert", help="Convert YAML to JSON or other formats.")
+    
+    # ---- Convert Subcommand ----
+    convert_parser = subparsers.add_parser(
+        "convert", 
+        help="Convert YAML to JSON or other formats."
+    )
     convert_parser.add_argument("input_file", help="Path to the YAML file.")
     convert_parser.add_argument("output_file", help="Path to the output file.")
-    convert_parser.add_argument("-to", choices=["json", "xml"], help="Target format.", required=True)
-    convert_parser.set_defaults(func=convert_command)  
+    convert_parser.add_argument(
+        "-to", 
+        choices=["json", "xml"], 
+        help="Target format.", 
+        required=True)
+    convert_parser.add_argument(
+        "--root-element-name", 
+        help="Set root element name. Default is input filename. (XML only)"
+        )
+    convert_parser.set_defaults(func=convert_command)
+    
+    # ---- Url Subcommand ----
+    url_parser = subparsers.add_parser(
+        "url", 
+        help="Encode or Decode YAML into/from a URL"
+    )
+    url_parser.add_argument(
+        "action",
+        choices=["encode", "decode"],  
+        help="Encode or Decode")
+    url_parser.add_argument("input_file", help="Path to the YAML file.")
+    url_parser.add_argument("output_file", help="Path to the output file.")
+    url_parser.set_defaults(func=url_command)
+      
 
     # Parse the user's CLI input
     args = parser.parse_args()
@@ -64,6 +91,8 @@ def main():
     if not args.command:
         parser.print_help()
         sys.exit(1)
+
+        
 
     # Dispatch to the chosen subcommand's function
     try:
