@@ -21,7 +21,9 @@ setup(
     packages=find_packages(),
     install_requires=[
         "PyYAML",
-        "deepdiff"
+        "deepdiff",
+        "json",
+        "xml"
         # add other dependencies here
     ],
     entry_points={
@@ -30,4 +32,3 @@ setup(
         ]
     },
 )
-yto
