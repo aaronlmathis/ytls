@@ -23,7 +23,8 @@ setup(
         "PyYAML",
         "deepdiff",
         "json",
-        "xml"
+        "xml",
+        "pykwalify"
         # add other dependencies here
     ],
     entry_points={

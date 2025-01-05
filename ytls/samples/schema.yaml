@@ -1,0 +1,15 @@
+type: map
+mapping:
+  name:
+    type: str
+    required: true
+
+  version:
+    type: str
+    required: true
+
+  dependencies:
+    type: seq
+    sequence:
+      - type: str
+    required: true

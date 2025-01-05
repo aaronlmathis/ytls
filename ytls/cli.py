@@ -91,7 +91,7 @@ def main():
     )
     
     validate_parser.add_argument("input_file", help="Path to the YAML file.")
-
+    validate_parser.add_argument("--schema", help="Path to a schema file.")
     validate_parser.set_defaults(func=validate_command)    
 
     # Parse the user's CLI input

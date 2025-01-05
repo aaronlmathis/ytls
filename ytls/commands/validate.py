@@ -17,6 +17,8 @@ from ytls.utils.file_helpers import load_yaml
 
 import yaml
 import sys
+from pykwalify.core import Core
+
 
 def validate_syntax(filepath: str) -> bool:
     try:
@@ -33,10 +35,22 @@ def validate_syntax(filepath: str) -> bool:
         print(f"Unexpected error reading {filepath}: {e}", file=sys.stderr)
         return False
 
+def validate_schema(input_file: str, schema_file:str) -> True:
+    try:
+        c = Core(source_file=input_file, schema_files=[schema_file])
+        c.validate()
+        return True
+    except Exception as e:
+        print(f"Schema validation error:\n{e}", file=sys.stderr)
+        return False
+
 def validate_command(args):
-    filepath = args.input_file
-    if validate_syntax(filepath):
-        print(f"'{filepath}' is valid YAML syntax.")
-        sys.exit(0)  # success
+    if args.schema is None:
+        if validate_syntax(args.input_file):
+            print(f"'{args.input_file}' is valid YAML syntax.")
+            sys.exit(0)  # success
+        else:
+            print(f"'{args.input_file}' is invalid YAML.")
     else:
-        print(f"'{filepath}' is invalid YAML.")
+        if validate_schema(args.input_file, args.schema):
+            print(f"'{args.input_file}' conforms to the schema found in '{args.schema}'")
