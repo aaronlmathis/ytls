@@ -14,7 +14,7 @@
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from ytls.utils.file_helpers import load_yaml
-import json, sys, os
+import json, os
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
@@ -38,7 +38,7 @@ def convert_command(args):
     else:
         raise ValueError(f"Unsupported output format: {args.to}")
 
-def convert_to_json(input_file, output_file):
+def convert_to_json(input_file: str, output_file: str):
     """
     Parses `input_file` as YAML and writes it out as json to `output_file`.
     

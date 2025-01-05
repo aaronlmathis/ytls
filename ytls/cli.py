@@ -20,6 +20,7 @@ import sys
 from ytls.commands.compare import compare_command
 from ytls.commands.convert import convert_command
 from ytls.commands.url import url_command
+from ytls.commands.validate import validate_command
 
 
 def main():
@@ -83,6 +84,15 @@ def main():
     url_parser.add_argument("output_file", help="Path to the output file.")
     url_parser.set_defaults(func=url_command)
       
+    # ---- Validate Subcommand ----
+    validate_parser = subparsers.add_parser(
+        "validate", 
+        help="Validate syntax or schema of YAML file"
+    )
+    
+    validate_parser.add_argument("input_file", help="Path to the YAML file.")
+
+    validate_parser.set_defaults(func=validate_command)    
 
     # Parse the user's CLI input
     args = parser.parse_args()
