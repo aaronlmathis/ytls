@@ -20,14 +20,6 @@ from pprint import pprint
 from ytls.utils.file_helpers import load_yaml
 
 
-def compare_yamls(yaml1, yaml2, ignore_order=True):
-    """
-    Compare two Python dictionaries and return the differences.
-    """
-    differences = DeepDiff(yaml1, yaml2, ignore_order=ignore_order)
-    return differences
-
-
 def compare_command(args):
     """
     The function to handle the 'compare' subcommand.
@@ -63,3 +55,10 @@ def compare_command(args):
         # Add more categories as needed
     else:
         print("\nThe YAML files are identical.")
+
+def compare_yamls(yaml1, yaml2, ignore_order=True):
+    """
+    Compare two Python dictionaries and return the differences.
+    """
+    differences = DeepDiff(yaml1, yaml2, ignore_order=ignore_order)
+    return differences

@@ -7,92 +7,93 @@
 # version.
 #
 # This program is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or FITNESS
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# this program.  If not, see <http://www.gnu.org/licenses/>.
+# this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
 import sys
 
-# Import the subcommand function
-from ytls.commands.compare import compare_command
-from ytls.commands.convert import convert_command
-from ytls.commands.url import url_command
-from ytls.commands.validate import validate_command
+from ytls.commands import (
+    compare,
+    convert,
+    url,
+    validate,
+    base64,
+)
 
 
 def main():
     """
     Main entry point for the ytls CLI.
     """
+
     parser = argparse.ArgumentParser(
         description="ytls: A one-stop shop of YAML-related CLI tools."
     )
 
     # Subparsers for each subcommand
     subparsers = parser.add_subparsers(
-        title="subcommands",
-        dest="command",
-        help="Available subcommands"
+        title="subcommands", dest="command", help="Available subcommands"
     )
 
     # ---- Compare Subcommand ----
     compare_parser = subparsers.add_parser(
-        "compare",
-        help="Compare two YAML files and report differences."
+        "compare", help="Compare two YAML files and report differences."
     )
     compare_parser.add_argument("file1", help="Path to the first YAML file.")
     compare_parser.add_argument("file2", help="Path to the second YAML file.")
     compare_parser.add_argument(
-        "-i", 
-        "--ignore-order", 
-        action="store_true", 
-        help="Ignore the order of list items in YAML."
+        "-i", "--ignore-order", action="store_true", help="Ignore the order of list items in YAML."
     )
-    compare_parser.set_defaults(func=compare_command)
-    
+    compare_parser.set_defaults(func=compare.compare_command)
+
     # ---- Convert Subcommand ----
     convert_parser = subparsers.add_parser(
-        "convert", 
-        help="Convert YAML to JSON or other formats."
+        "convert", help="Convert YAML to JSON or other formats."
     )
     convert_parser.add_argument("input_file", help="Path to the YAML file.")
     convert_parser.add_argument("output_file", help="Path to the output file.")
     convert_parser.add_argument(
-        "-to", 
-        choices=["json", "xml"], 
-        help="Target format.", 
-        required=True)
+        "-to", choices=["json", "xml"], help="Target format.", required=True
+    )
     convert_parser.add_argument(
-        "--root-element-name", 
-        help="Set root element name. Default is input filename. (XML only)"
-        )
-    convert_parser.set_defaults(func=convert_command)
-    
+        "-r", "--root-element-name", help="Set root element name. Default is input filename. (XML only)"
+    )
+    convert_parser.set_defaults(func=convert.convert_command)
+
     # ---- Url Subcommand ----
     url_parser = subparsers.add_parser(
-        "url", 
-        help="Encode or Decode YAML into/from a URL"
+        "url", help="Encode or Decode YAML into/from a URL"
     )
     url_parser.add_argument(
-        "action",
-        choices=["encode", "decode"],  
-        help="Encode or Decode")
+        "action", choices=["encode", "decode"], help="Encode or Decode"
+    )
     url_parser.add_argument("input_file", help="Path to the YAML file.")
     url_parser.add_argument("output_file", help="Path to the output file.")
-    url_parser.set_defaults(func=url_command)
-      
+    url_parser.set_defaults(func=url.url_command)
+
     # ---- Validate Subcommand ----
     validate_parser = subparsers.add_parser(
-        "validate", 
-        help="Validate syntax or schema of YAML file"
+        "validate", help="Validate syntax or schema of YAML file"
     )
-    
     validate_parser.add_argument("input_file", help="Path to the YAML file.")
-    validate_parser.add_argument("--schema", help="Path to a schema file.")
-    validate_parser.set_defaults(func=validate_command)    
+    validate_parser.add_argument("-s", "--schema", help="Path to a schema file.")
+    validate_parser.set_defaults(func=validate.validate_command)
+
+    # ---- Base64 Subcommand ----
+    base64_parser = subparsers.add_parser(
+        "base64", help="Encode or decode YAML into base64"
+    )
+    base64_parser.add_argument(
+        "action", choices=["encode", "decode"], help="Encode or Decode"
+    )
+    base64_parser.add_argument("input_file", help="Path to the YAML file.")
+    base64_parser.add_argument("output_file", help="Path to the file to write the base64.")
+    base64_parser.add_argument("--split", type=int, help="Split base64 into blocks") 
+    base64_parser.set_defaults(func=base64.base64_command) 
 
     # Parse the user's CLI input
     args = parser.parse_args()
@@ -101,8 +102,6 @@ def main():
     if not args.command:
         parser.print_help()
         sys.exit(1)
-
-        
 
     # Dispatch to the chosen subcommand's function
     try:

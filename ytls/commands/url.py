@@ -15,9 +15,8 @@
 
 # url.parse.quote
 from urllib.parse import quote, unquote
-from ytls.utils.file_helpers import load_yaml
 import yaml
-#quote(yaml_text)
+
 def url_command(args):
     """
     The function to handle the 'urlencode' subcommand.
@@ -65,11 +64,6 @@ def encode_url(input_file, output_file):
     except OSError as e:
         raise OSError(f"Could not write to '{output_file}': {e}")   
 
-
-
-from urllib.parse import unquote
-import yaml
-import os
 
 def decode_url(input_file, output_file):
     """
