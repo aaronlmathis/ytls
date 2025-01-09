@@ -5,3 +5,5 @@ ytls.code-workspace
 /ytls/commands/__pycache__
 /ytls/utils/__pycache__
 /ytls.egg-info
+ytls/commands/index.html
+ytls/commands/error.html

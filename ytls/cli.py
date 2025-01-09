@@ -22,6 +22,7 @@ from ytls.commands import (
     url,
     validate,
     base64,
+    prettify,
 )
 
 
@@ -94,6 +95,16 @@ def main():
     base64_parser.add_argument("output_file", help="Path to the file to write the base64.")
     base64_parser.add_argument("--split", type=int, help="Split base64 into blocks") 
     base64_parser.set_defaults(func=base64.base64_command) 
+
+
+    # ---- Prettify Subcommand ----
+    prettify_parser = subparsers.add_parser(
+        "prettify", help="Read inline YAML from file an output to pretty YAML"
+    )
+    prettify_parser.add_argument("input_file", help="Path to the first YAML file that contains inline YAML.")
+    prettify_parser.add_argument("output_file", help="Path to output the prettify'd YAML.")
+
+    prettify_parser.set_defaults(func=prettify.prettify_command)
 
     # Parse the user's CLI input
     args = parser.parse_args()
